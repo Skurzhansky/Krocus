@@ -251,8 +251,8 @@ h3 { font-size: 19px; margin-bottom: 10px; }
   box-shadow: 0 24px 60px rgba(18,24,31,.12);
   border: 1px solid rgba(201,123,30,.15);
 }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.field { display: flex; flex-direction: column; gap: 7px; }
+.form-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 18px; }
+.field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
 .field.full { grid-column: 1 / -1; }
 .field label { font-size: 13px; font-weight: 800; letter-spacing: .04em; color: var(--ink); }
 .field input, .field select, .field textarea {
@@ -328,7 +328,7 @@ h3 { font-size: 19px; margin-bottom: 10px; }
 @media (max-width: 620px) {
   .cards.cols-3, .cards.cols-2, .cards.cols-4 { grid-template-columns: 1fr; }
   .hero-stats { grid-template-columns: 1fr; }
-  .form-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: minmax(0,1fr); }
   .gallery-grid { grid-template-columns: 1fr; }
   .news-item { grid-template-columns: 1fr; gap: 6px; }
   .footer-grid { grid-template-columns: 1fr; }
