@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Анкета кандидата — клуб «Крокус»</title>
+  <meta name="description" content="Анкета кандидата в клуб путешественников «Крокус».">
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="Логотип клуба «Крокус»">
+      <span class="brand-name">КРОКУС<small>клуб путешественников</small></span>
+    </a>
+    <button class="burger" aria-label="Меню" aria-expanded="false">☰</button>
+    <nav class="nav">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О клубе</a>
+      <a href="activities.html">Занятия</a>
+      <a href="climbers.html">Альпинисты</a>
+      <a href="gallery.html">Фотогалерея</a>
+      <a href="news.html">Новости</a>
+      <a href="contacts.html">Контакты</a>
+      <a href="application.html">Анкета</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-photo" data-img="hero_img"></div>
+  <div class="container" style="position:relative; z-index:2">
+    <span class="altitude">Анкета кандидата</span>
+    <h1 data-t="app_h1"></h1>
+    <p class="lead" data-t="app_lead" style="color:#D8D2C4"></p>
+  </div>
+</section>
+
+<section class="section on-snow">
+  <div class="container" style="max-width:820px">
+    <div class="form-card reveal">
+      <form id="candidate-form">
+        <div class="form-grid">
+          <div class="field"><label for="f-name">Имя и фамилия *</label><input id="f-name" name="name" required placeholder="Иван Петров"></div>
+          <div class="field"><label for="f-age">Возраст *</label><input id="f-age" name="age" type="number" min="4" max="99" required placeholder="25"></div>
+          <div class="field"><label for="f-phone">Телефон *</label><input id="f-phone" name="phone" type="tel" required placeholder="+7 (900) 000-00-00"></div>
+          <div class="field">
+            <label for="f-dir">Что интересует *</label>
+            <select id="f-dir" name="direction" required>
+              <option value="Скалолазание">Скалолазание</option>
+              <option value="Альпинизм">Альпинизм</option>
+              <option value="Походы и путешествия">Походы и путешествия</option>
+              <option value="Семейная группа">Семейная группа</option>
+              <option value="Пока не знаю">Пока не знаю — подскажите</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="f-exp">Опыт</label>
+            <select id="f-exp" name="experience">
+              <option value="Нет опыта">Нет опыта — начинаю с нуля</option>
+              <option value="Немного">Немного пробовал(а)</option>
+              <option value="Есть опыт">Есть опыт тренировок или походов</option>
+            </select>
+          </div>
+          <div class="field full"><label for="f-about">Расскажите о себе или задайте вопрос</label><textarea id="f-about" name="about" placeholder="Например: хочу привести ребёнка 8 лет, какие есть группы?"></textarea></div>
+        </div>
+        <div style="margin-top:24px; display:flex; align-items:center; gap:18px; flex-wrap:wrap">
+          <button class="btn btn-gold" type="submit">Отправить анкету →</button>
+          <span class="form-note" style="margin:0">Нажимая кнопку, вы соглашаетесь на обработку контактных данных.</span>
+        </div>
+        <p id="form-ok" hidden style="margin-top:18px; color:var(--gold-deep); font-weight:800">Откроется письмо в вашей почтовой программе — просто нажмите «Отправить». Если удобнее, напишите нам ВКонтакте.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:16px">
+          <img src="logo.png" alt="">
+          <span class="brand-name">КРОКУС<small>клуб путешественников</small></span>
+        </a>
+        <p>Альпинизм, скалолазание и путешествия для всех возрастов. Воронеж.</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <a href="about.html">О клубе</a>
+        <a href="activities.html">Наши занятия</a>
+        <a href="climbers.html">Знаменитые альпинисты</a>
+        <a href="gallery.html">Фотогалерея</a>
+        <a href="news.html">Новости</a>
+      </div>
+      <div>
+        <h4>Связаться</h4>
+        <a data-tel="person2_phone" href="#"></a>
+        <a data-tel="person1_phone" href="#"></a>
+        <a data-href="club_vk" href="#" target="_blank" rel="noopener">Клуб ВКонтакте</a>
+        <a data-href="fed_vk" href="#" target="_blank" rel="noopener">Федерация альпинизма Воронежа</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Клуб путешественников «Крокус»</span>
+      <span>Сделано с любовью к горам</span>
+    </div>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="core.js"></script>
+</body>
+</html>

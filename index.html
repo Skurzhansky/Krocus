@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная — клуб «Крокус»</title>
+  <meta name="description" content="Клуб путешественников «Крокус» в Воронеже: альпинизм, скалолазание, походы и семейные путешествия.">
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="Логотип клуба «Крокус»">
+      <span class="brand-name">КРОКУС<small>клуб путешественников</small></span>
+    </a>
+    <button class="burger" aria-label="Меню" aria-expanded="false">☰</button>
+    <nav class="nav">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О клубе</a>
+      <a href="activities.html">Занятия</a>
+      <a href="climbers.html">Альпинисты</a>
+      <a href="gallery.html">Фотогалерея</a>
+      <a href="news.html">Новости</a>
+      <a href="contacts.html">Контакты</a>
+      <a href="application.html">Анкета</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-photo" data-img="hero_img"></div>
+  <div class="topo" aria-hidden="true">
+    <svg width="900" height="900" style="top:-260px; right:-260px" viewBox="0 0 900 900" fill="none">
+      <g stroke="#E8A23D" stroke-width="1.2">
+        <circle cx="450" cy="450" r="140"/><circle cx="450" cy="450" r="200"/>
+        <circle cx="450" cy="450" r="260"/><circle cx="450" cy="450" r="320"/>
+        <circle cx="450" cy="450" r="380"/><circle cx="450" cy="450" r="440"/>
+      </g>
+    </svg>
+  </div>
+  <div class="container hero-grid">
+    <div>
+      <span class="altitude" data-t="hero_eyebrow"></span>
+      <h1 data-t="hero_title"></h1>
+      <p class="lead" data-t="hero_lead" style="color:#D8D2C4"></p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="application.html">Вступить в клуб →</a>
+        <a class="btn btn-ghost" href="activities.html">Наши занятия</a>
+      </div>
+    </div>
+    <div class="hero-flower"><img src="logo.png" alt="Золотой крокус — символ клуба"></div>
+  </div>
+  <div class="container hero-stats">
+    <div class="stat reveal"><b data-t="stat1_b"></b><span data-t="stat1_s"></span></div>
+    <div class="stat reveal"><b data-t="stat2_b"></b><span data-t="stat2_s"></span></div>
+    <div class="stat reveal"><b data-t="stat3_b"></b><span data-t="stat3_s"></span></div>
+  </div>
+</section>
+
+<section class="section on-snow">
+  <div class="container">
+    <span class="altitude">Направления</span>
+    <h2 data-t="dirs_title"></h2>
+    <p class="lead" data-t="dirs_lead"></p>
+    <div class="cards cols-3" data-list="dirs"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="altitude">Почему «Крокус»</span>
+    <h2 data-t="why_title"></h2>
+    <div class="cards cols-3">
+      <article class="card reveal"><h3 class="text-gold" data-t="why1_t"></h3><p data-t="why1_p"></p></article>
+      <article class="card reveal"><h3 class="text-gold" data-t="why2_t"></h3><p data-t="why2_p"></p></article>
+      <article class="card reveal"><h3 class="text-gold" data-t="why3_t"></h3><p data-t="why3_p"></p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <span class="altitude">Моменты клуба</span>
+    <h2>Как это выглядит вживую</h2>
+    <div class="mosaic" data-list="mosaic"></div>
+    <div style="margin-top:28px"><a class="btn btn-ghost" href="gallery.html">Вся фотогалерея →</a></div>
+  </div>
+</section>
+
+<section class="section on-snow cta-section">
+  <div class="container">
+    <div class="cta-band with-photo reveal">
+      <div class="cta-photo" data-img="cta_img"></div>
+      <h2 data-t="cta_title"></h2>
+      <p data-t="cta_p"></p>
+      <a class="btn" href="application.html">Заполнить анкету</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:16px">
+          <img src="logo.png" alt="">
+          <span class="brand-name">КРОКУС<small>клуб путешественников</small></span>
+        </a>
+        <p>Альпинизм, скалолазание и путешествия для всех возрастов. Воронеж.</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <a href="about.html">О клубе</a>
+        <a href="activities.html">Наши занятия</a>
+        <a href="climbers.html">Знаменитые альпинисты</a>
+        <a href="gallery.html">Фотогалерея</a>
+        <a href="news.html">Новости</a>
+      </div>
+      <div>
+        <h4>Связаться</h4>
+        <a data-tel="person2_phone" href="#"></a>
+        <a data-tel="person1_phone" href="#"></a>
+        <a data-href="club_vk" href="#" target="_blank" rel="noopener">Клуб ВКонтакте</a>
+        <a data-href="fed_vk" href="#" target="_blank" rel="noopener">Федерация альпинизма Воронежа</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Клуб путешественников «Крокус»</span>
+      <span>Сделано с любовью к горам</span>
+    </div>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="core.js"></script>
+</body>
+</html>

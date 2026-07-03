@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Админ-панель — клуб «Крокус»</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--rock:#12181F;--rock2:#1A222C;--gold:#E8A23D;--gold2:#C97B1E;--snow:#F7F5F0;--mist:#8B94A0;--line:rgba(232,162,61,.25)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Manrope',sans-serif;background:var(--rock);color:var(--snow);font-size:15px;line-height:1.5}
+h1,h2{font-family:'Unbounded',sans-serif;font-weight:600}
+h1{font-size:22px}h2{font-size:16px;color:var(--gold);margin-bottom:14px}
+.wrap{max-width:980px;margin:0 auto;padding:28px 18px 120px}
+.topbar{display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.topbar img{width:44px;height:44px;border-radius:50%;background:#fff}
+.panel{background:var(--rock2);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+label{display:block;font-size:12.5px;font-weight:800;color:var(--mist);margin:12px 0 5px;letter-spacing:.03em}
+input,textarea,select{width:100%;font-family:inherit;font-size:15px;color:var(--snow);background:#0E141B;border:1.5px solid #2A3542;border-radius:10px;padding:10px 12px}
+input:focus,textarea:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:74px;resize:vertical}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-weight:800;font-size:14px;border:none;border-radius:11px;padding:12px 18px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-gold{background:linear-gradient(135deg,#F4CE8A,#E8A23D,#C97B1E);color:var(--rock)}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--gold)}
+.btn-danger{background:#3A1E1E;color:#FF9D9D;border:1.5px solid #5A2A2A}
+.btn-sm{padding:7px 12px;font-size:12.5px;border-radius:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.item{border:1px solid #2A3542;border-radius:12px;padding:14px;margin-bottom:12px;background:#151C24}
+.item-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.item-head b{font-size:14px;color:var(--gold)}
+.thumb{width:100%;height:120px;object-fit:cover;border-radius:9px;margin-top:8px;background:#0E141B;border:1px solid #2A3542}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tab{background:transparent;border:1.5px solid var(--line);color:var(--snow);border-radius:10px;padding:9px 14px;font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer}
+.tab.active{background:linear-gradient(135deg,#F4CE8A,#E8A23D,#C97B1E);color:var(--rock);border-color:transparent}
+.tabpane{display:none}.tabpane.active{display:block}
+.actionbar{position:fixed;left:0;right:0;bottom:0;background:rgba(14,20,27,.96);border-top:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;z-index:50;backdrop-filter:blur(8px)}
+.note{font-size:13px;color:var(--mist);margin-top:8px}
+.note b{color:var(--gold)}
+.pill{font-size:11.5px;font-weight:800;background:#233041;color:var(--gold);border-radius:99px;padding:3px 10px}
+#login{max-width:420px;margin:12vh auto;text-align:center}
+#login img{width:80px;height:80px;border-radius:50%;background:#fff;margin-bottom:16px}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--gold2);color:#fff;font-weight:800;padding:12px 22px;border-radius:12px;z-index:99;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ВХОД -->
+<div id="login">
+  <img src="logo.png" alt="Крокус">
+  <h1>Админ-панель «Крокус»</h1>
+  <div class="panel" style="margin-top:20px;text-align:left">
+    <label for="pass">Пароль</label>
+    <input id="pass" type="password" placeholder="Введите пароль" autocomplete="current-password">
+    <p id="loginerr" class="note" style="color:#FF9D9D" hidden>Неверный пароль</p>
+    <div style="margin-top:16px"><button class="btn btn-gold" id="loginbtn" style="width:100%;justify-content:center">Войти</button></div>
+    <p class="note">Пароль по умолчанию: <b>krokus2026</b>. Смените его во вкладке «Настройки».</p>
+  </div>
+</div>
+
+<!-- ПАНЕЛЬ -->
+<div class="wrap" id="app" hidden>
+  <div class="topbar">
+    <img src="logo.png" alt="">
+    <div style="flex:1">
+      <h1>Админ-панель</h1>
+      <div class="note">Клуб путешественников «Крокус» · <a href="index.html" style="color:var(--gold)">открыть сайт</a></div>
+    </div>
+    <span class="pill" id="draftpill" hidden>черновик активен</span>
+    <button class="btn btn-ghost btn-sm" id="logout">Выйти</button>
+  </div>
+
+  <div class="panel" style="border-color:var(--gold2)">
+    <b style="color:var(--gold)">Как публикуются изменения.</b>
+    <p class="note" style="margin-top:6px">1. Редактируете поля ниже → <b>«Предпросмотр»</b> покажет изменения на сайте (только в вашем браузере).<br>
+    2. Когда всё нравится — <b>«Скачать content.js»</b> и загрузите этот файл на GitHub вместо старого (перетаскиванием, как обычно).<br>
+    3. Через минуту-две изменения увидят все посетители. Если не видно — обновите с очисткой кэша (Cmd+Shift+R) или откройте инкогнито.</p>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-pane="p-texts">Тексты</button>
+    <button class="tab" data-pane="p-contacts">Контакты</button>
+    <button class="tab" data-pane="p-images">Главные фото</button>
+    <button class="tab" data-pane="p-dirs">Направления</button>
+    <button class="tab" data-pane="p-acts">Занятия</button>
+    <button class="tab" data-pane="p-schedule">Расписание</button>
+    <button class="tab" data-pane="p-climbers">Альпинисты</button>
+    <button class="tab" data-pane="p-gallery">Галерея</button>
+    <button class="tab" data-pane="p-news">Новости</button>
+    <button class="tab" data-pane="p-videos">Видео</button>
+    <button class="tab" data-pane="p-settings">Настройки</button>
+  </div>
+
+  <div class="tabpane active" id="p-texts"><div class="panel" id="box-texts"></div></div>
+  <div class="tabpane" id="p-contacts"><div class="panel" id="box-contacts"></div></div>
+  <div class="tabpane" id="p-images"><div class="panel" id="box-images"><p class="note" style="margin-bottom:10px">Фоновые фотографии сайта. Можно вставить ссылку на картинку или загрузить файл с компьютера — он будет уменьшен и встроен в content.js.</p><div id="imgs"></div></div></div>
+  <div class="tabpane" id="p-dirs"><div class="panel"><div id="list-dirs"></div><button class="btn btn-ghost btn-sm" data-add="dirs">+ Добавить направление</button></div></div>
+  <div class="tabpane" id="p-acts"><div class="panel"><div id="list-acts"></div><button class="btn btn-ghost btn-sm" data-add="acts">+ Добавить занятие</button></div></div>
+  <div class="tabpane" id="p-schedule"><div class="panel"><div id="list-schedule"></div><button class="btn btn-ghost btn-sm" data-add="schedule">+ Добавить строку</button></div></div>
+  <div class="tabpane" id="p-climbers"><div class="panel"><div id="list-climbers"></div><button class="btn btn-ghost btn-sm" data-add="climbers">+ Добавить альпиниста</button></div></div>
+  <div class="tabpane" id="p-gallery"><div class="panel"><p class="note" style="margin-bottom:10px">Первые 5 фото также показываются в мозаике на главной странице.</p><div id="list-gallery"></div><button class="btn btn-ghost btn-sm" data-add="gallery">+ Добавить фото</button></div></div>
+  <div class="tabpane" id="p-news"><div class="panel"><div id="list-news"></div><button class="btn btn-ghost btn-sm" data-add="news">+ Добавить новость</button></div></div>
+  <div class="tabpane" id="p-videos"><div class="panel"><p class="note" style="margin-bottom:10px">Вставьте обычную ссылку на видео YouTube или VK Видео — плеер встроится автоматически. Видео показываются на страницах «Занятия» и «Фотогалерея».</p><div id="list-videos"></div><button class="btn btn-ghost btn-sm" data-add="videos">+ Добавить видео</button></div></div>
+
+  <div class="tabpane" id="p-settings">
+    <div class="panel">
+      <h2>Смена пароля</h2>
+      <label>Новый пароль</label><input id="newpass" type="password" placeholder="Минимум 6 символов">
+      <div style="margin-top:12px"><button class="btn btn-gold btn-sm" id="savepass">Сохранить пароль</button></div>
+      <p class="note">Важно: пароль защищает только вход в эту панель в браузере. Сами изменения попадают на сайт только через загрузку content.js на GitHub — без доступа к вашему GitHub никто ничего не поменяет.</p>
+    </div>
+    <div class="panel">
+      <h2>Сброс</h2>
+      <button class="btn btn-danger btn-sm" id="resetdraft">Удалить черновик и вернуть содержимое из content.js</button>
+    </div>
+  </div>
+</div>
+
+<div class="actionbar" id="actions" hidden>
+  <button class="btn btn-ghost" id="preview">👁 Предпросмотр на сайте</button>
+  <button class="btn btn-gold" id="export">⬇ Скачать content.js</button>
+</div>
+
+<script src="content.js"></script>
+<script>
+(function(){
+'use strict';
+
+// ---------- Данные ----------
+const DEFAULT = JSON.parse(JSON.stringify(window.KROKUS_DEFAULT || {}));
+let data;
+try { data = JSON.parse(localStorage.getItem('krokus_draft') || 'null') || JSON.parse(JSON.stringify(DEFAULT)); }
+catch(e){ data = JSON.parse(JSON.stringify(DEFAULT)); }
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const toast = msg => { const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); };
+
+// ---------- Вход ----------
+const PASS_KEY='krokus_admin_pass';
+const getPass=()=>localStorage.getItem(PASS_KEY)||'krokus2026';
+const tryLogin=()=>{
+  if($('#pass').value===getPass()){ sessionStorage.setItem('krokus_admin','1'); showApp(); }
+  else $('#loginerr').hidden=false;
+};
+$('#loginbtn').onclick=tryLogin;
+$('#pass').addEventListener('keydown',e=>{ if(e.key==='Enter') tryLogin(); });
+$('#logout').onclick=()=>{ sessionStorage.removeItem('krokus_admin'); location.reload(); };
+function showApp(){ $('#login').hidden=true; $('#app').hidden=false; $('#actions').hidden=false; renderAll(); }
+if(sessionStorage.getItem('krokus_admin')==='1') showApp();
+
+// ---------- Вкладки ----------
+$('#tabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab'); if(!b) return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('active'));
+  b.classList.add('active'); $('#'+b.dataset.pane).classList.add('active');
+});
+
+// ---------- Помощники полей ----------
+function field(label,val,onch,type){
+  const w=document.createElement('div');
+  w.innerHTML='<label>'+esc(label)+'</label>';
+  const el=document.createElement(type==='area'?'textarea':'input');
+  el.value=val||'';
+  el.addEventListener('input',()=>onch(el.value));
+  w.appendChild(el); return w;
+}
+function imgField(label,val,onch){
+  const w=document.createElement('div');
+  w.innerHTML='<label>'+esc(label)+' — ссылка на фото</label>';
+  const inp=document.createElement('input'); inp.value=val||''; inp.placeholder='https://…';
+  const img=document.createElement('img'); img.className='thumb'; if(val) img.src=val;
+  inp.addEventListener('input',()=>{ onch(inp.value); img.src=inp.value; });
+  const up=document.createElement('input'); up.type='file'; up.accept='image/*'; up.style.marginTop='8px';
+  up.addEventListener('change',()=>{
+    const f=up.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>{ const im=new Image(); im.onload=()=>{
+      const MAX=1400, k=Math.min(1,MAX/Math.max(im.width,im.height));
+      const c=document.createElement('canvas'); c.width=Math.round(im.width*k); c.height=Math.round(im.height*k);
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      const url=c.toDataURL('image/jpeg',.8);
+      inp.value='(загруженное фото)'; img.src=url; onch(url);
+      toast('Фото загружено и сжато');
+    }; im.src=r.result; };
+    r.readAsDataURL(f);
+  });
+  w.appendChild(inp); w.appendChild(up); w.appendChild(img); return w;
+}
+
+// ---------- Тексты ----------
+const TEXT_FIELDS=[
+ ['Главная — надпись над заголовком','hero_eyebrow'],['Главная — заголовок (можно HTML)','hero_title'],['Главная — подзаголовок','hero_lead','area'],
+ ['Цифра 1','stat1_b'],['Подпись 1','stat1_s'],['Цифра 2','stat2_b'],['Подпись 2','stat2_s'],['Цифра 3','stat3_b'],['Подпись 3','stat3_s'],
+ ['Заголовок «Направления»','dirs_title'],['Подзаголовок «Направления»','dirs_lead','area'],
+ ['Заголовок «Почему мы»','why_title'],
+ ['Почему мы 1 — заголовок','why1_t'],['Почему мы 1 — текст','why1_p','area'],
+ ['Почему мы 2 — заголовок','why2_t'],['Почему мы 2 — текст','why2_p','area'],
+ ['Почему мы 3 — заголовок','why3_t'],['Почему мы 3 — текст','why3_p','area'],
+ ['Оранжевый блок — заголовок','cta_title'],['Оранжевый блок — текст','cta_p','area'],
+ ['О клубе — заголовок','about_h1'],['О клубе — подзаголовок','about_lead','area'],
+ ['О клубе, блок 1 — заголовок','about1_t'],['О клубе, блок 1 — текст','about1_p','area'],
+ ['О клубе, блок 2 — заголовок','about2_t'],['О клубе, блок 2 — текст','about2_p','area'],
+ ['Занятия — заголовок','act_h1'],['Занятия — подзаголовок','act_lead','area'],
+ ['Альпинисты — заголовок','climb_h1'],['Альпинисты — подзаголовок','climb_lead','area'],
+ ['Галерея — заголовок','gal_h1'],['Галерея — подзаголовок','gal_lead','area'],
+ ['Новости — заголовок','news_h1'],['Новости — подзаголовок','news_lead','area'],
+ ['Контакты — заголовок','cont_h1'],['Контакты — подзаголовок','cont_lead','area'],
+ ['Анкета — заголовок','app_h1'],['Анкета — подзаголовок','app_lead','area'],
+];
+const CONTACT_FIELDS=[
+ ['Руководитель 1 — имя','person1_name'],['Руководитель 1 — должность','person1_role'],['Руководитель 1 — телефон','person1_phone'],['Руководитель 1 — ссылка ВК','person1_vk'],
+ ['Руководитель 2 — имя','person2_name'],['Руководитель 2 — должность','person2_role'],['Руководитель 2 — телефон','person2_phone'],['Руководитель 2 — ссылка ВК','person2_vk'],
+ ['Группа клуба ВКонтакте','club_vk'],['Федерация альпинизма ВК','fed_vk'],['Email для анкет','email'],
+];
+function renderTexts(boxId, fields){
+  const box=$('#'+boxId); box.innerHTML='';
+  fields.forEach(([label,key,type])=>{
+    box.appendChild(field(label, data.texts[key], v=>data.texts[key]=v, type));
+  });
+}
+
+// ---------- Главные фото ----------
+const IMG_FIELDS=[['Фон главного экрана (горы)','hero_img'],['Фото «О клубе»','about_img'],['Фон оранжевого блока','cta_img']];
+function renderImages(){
+  const box=$('#imgs'); box.innerHTML='';
+  IMG_FIELDS.forEach(([label,key])=>{
+    box.appendChild(imgField(label, data.images[key], v=>data.images[key]=v));
+  });
+}
+
+// ---------- Списки ----------
+const LISTS={
+ dirs:{fields:[['t','Название'],['p','Описание','area'],['img','Фото','img']], blank:{t:'',p:'',img:''}, title:i=>i.t||'Направление'},
+ acts:{fields:[['t','Название'],['p','Описание','area'],['img','Фото','img']], blank:{t:'',p:'',img:''}, title:i=>i.t||'Занятие'},
+ schedule:{fields:[['d','День'],['z','Занятие'],['g','Группа'],['t','Время']], blank:{d:'',z:'',g:'',t:''}, title:i=>(i.d||'День')+' — '+(i.z||'')},
+ climbers:{fields:[['name','Имя'],['tag','Подпись (например «Эверест · 8 848 м»)'],['p','Описание','area'],['img','Фото','img']], blank:{name:'',tag:'',p:'',img:''}, title:i=>i.name||'Альпинист'},
+ gallery:{fields:[['t','Название'],['c','Подпись'],['img','Фото','img']], blank:{t:'',c:'',img:''}, title:i=>i.t||'Фото'},
+ news:{fields:[['date','Дата (например «Июль 2026»)'],['t','Заголовок'],['p','Текст','area'],['img','Фото','img']], blank:{date:'',t:'',p:'',img:''}, title:i=>i.t||'Новость'},
+ videos:{fields:[['t','Название'],['url','Ссылка на YouTube или VK Видео']], blank:{t:'',url:''}, title:i=>i.t||'Видео'},
+};
+function renderList(name){
+  const cfg=LISTS[name], box=$('#list-'+name); box.innerHTML='';
+  (data[name]||[]).forEach((item,idx)=>{
+    const d=document.createElement('div'); d.className='item';
+    const head=document.createElement('div'); head.className='item-head';
+    head.innerHTML='<b>'+esc(cfg.title(item))+'</b>';
+    const btns=document.createElement('div');
+    const up=document.createElement('button'); up.className='btn btn-ghost btn-sm'; up.textContent='↑';
+    up.onclick=()=>{ if(idx>0){ [data[name][idx-1],data[name][idx]]=[data[name][idx],data[name][idx-1]]; renderList(name);} };
+    const del=document.createElement('button'); del.className='btn btn-danger btn-sm'; del.textContent='Удалить'; del.style.marginLeft='6px';
+    del.onclick=()=>{ if(confirm('Удалить этот элемент?')){ data[name].splice(idx,1); renderList(name);} };
+    btns.appendChild(up); btns.appendChild(del); head.appendChild(btns); d.appendChild(head);
+    const grid=document.createElement('div'); grid.className='grid2';
+    cfg.fields.forEach(([key,label,type])=>{
+      const holder = type==='img'
+        ? imgField(label, item[key], v=>item[key]=v)
+        : field(label, item[key], v=>{ item[key]=v; head.querySelector('b').textContent=cfg.title(item); }, type);
+      if(type==='area'||type==='img') holder.style.gridColumn='1 / -1';
+      grid.appendChild(holder);
+    });
+    d.appendChild(grid); box.appendChild(d);
+  });
+}
+document.querySelectorAll('[data-add]').forEach(b=>{
+  b.onclick=()=>{ const n=b.dataset.add; (data[n]=data[n]||[]).push(JSON.parse(JSON.stringify(LISTS[n].blank))); renderList(n); };
+});
+
+function renderAll(){
+  renderTexts('box-texts',TEXT_FIELDS);
+  renderTexts('box-contacts',CONTACT_FIELDS);
+  renderImages();
+  Object.keys(LISTS).forEach(renderList);
+  $('#draftpill').hidden = !localStorage.getItem('krokus_draft');
+}
+
+// ---------- Действия ----------
+$('#preview').onclick=()=>{
+  try{ localStorage.setItem('krokus_draft', JSON.stringify(data)); }
+  catch(e){ alert('Черновик слишком большой для предпросмотра (много загруженных фото). Предпросмотр пропущен — используйте «Скачать content.js». Или вставляйте фото ссылками.'); return; }
+  $('#draftpill').hidden=false;
+  window.open('index.html','_blank');
+};
+$('#export').onclick=()=>{
+  const txt='// Контент сайта «Крокус». Сгенерировано админ-панелью '+new Date().toLocaleString('ru-RU')+'\n'+
+    'window.KROKUS_DEFAULT = '+JSON.stringify(data,null,2)+';\n';
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/javascript'}));
+  a.download='content.js'; a.click();
+  toast('content.js скачан — загрузите его на GitHub');
+};
+$('#savepass').onclick=()=>{
+  const v=$('#newpass').value.trim();
+  if(v.length<6){ alert('Пароль должен быть не короче 6 символов'); return; }
+  localStorage.setItem(PASS_KEY,v); $('#newpass').value=''; toast('Пароль изменён');
+};
+$('#resetdraft').onclick=()=>{
+  if(confirm('Удалить черновик? Панель вернётся к содержимому из content.js.')){
+    localStorage.removeItem('krokus_draft');
+    data=JSON.parse(JSON.stringify(DEFAULT));
+    renderAll(); toast('Черновик удалён');
+  }
+};
+})();
+</script>
+</body>
+</html>
